@@ -48,63 +48,63 @@
 import { required, minValue } from 'vuelidate/lib/validators';
 
 export default {
-    props: {
-        categories: {
-            type: Array,
-            required: true,
-        }
+  props: {
+    categories: {
+      type: Array,
+      required: true,
     },
-    data: () => ({
-        title: '',
-        limit: 100,
-        select: null,
-        current: null,
-    }),
-    validations: {
-        title: { required },
-        limit: { minValue: minValue(100) },
-    },
-    created() {
-        const { id, title, limit } = this.categories[0];
-        this.current = id;
-        this.title = title;
-        this.limit = limit;
-    },
-    mounted() {
-        M.updateTextFields();
-        this.select = M.FormSelect.init(this.$refs.select)
-    },
-    methods: {
-      async submitHandler() {
-          if (this.$v.invalid) {
-              this.$v.touch();
-              return;
-          }
-          try {
-              const categoryData = {
-                  id: this.current,
-                  title: this.title,
-                  limit: this.limit,
-              };
-              await this.$store.dispatch('updateCategory', categoryData);
-              this.$message('Категория обновлена');
-              this.$emit('updated', categoryData);
-          } catch (e) {
-              throw e;
-          }
+  },
+  data: () => ({
+    title: '',
+    limit: 100,
+    select: null,
+    current: null,
+  }),
+  validations: {
+    title: { required },
+    limit: { minValue: minValue(100) },
+  },
+  created() {
+    const { id, title, limit } = this.categories[0];
+    this.current = id;
+    this.title = title;
+    this.limit = limit;
+  },
+  mounted() {
+    M.updateTextFields();
+    this.select = M.FormSelect.init(this.$refs.select);
+  },
+  methods: {
+    async submitHandler() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
+      }
+      try {
+        const categoryData = {
+          id: this.current,
+          title: this.title,
+          limit: this.limit,
+        };
+        await this.$store.dispatch('updateCategory', categoryData);
+        this.$message('Категория обновлена');
+        this.$emit('updated', categoryData);
+      } catch (e) {
+        throw e;
       }
     },
-    watch: {
-        current(catId) {
-            const { title, limit } = this.categories.find(c => c.id === catId);
-            this.title = title;
-            this.limit = limit;
-        }
+  },
+  watch: {
+    current(catId) {
+      const { title, limit } = this.categories.find(c => c.id === catId);
+      this.title = title;
+      this.limit = limit;
     },
-    destroyed() {
-        if (this.select && this.select.destroy) {
-            this.select.destroy();
-        }
-    },
-}
+  },
+  destroyed() {
+    if (this.select && this.select.destroy) {
+      this.select.destroy();
+    }
+  },
+};
 </script>

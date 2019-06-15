@@ -55,7 +55,7 @@ export default {
   computed: {
     name() {
       return this.$store.getters.info.name;
-    }
+    },
   },
   mounted() {
     this.interval = setInterval(() => {
