@@ -15,7 +15,7 @@
                 'green': record.type === 'income',
               }">
             <div class="card-content white-text">
-              <p>{{ 'Description' | localize }}: {{ record.descriptions }}</p>
+              <p>{{ 'Description' | localize }}: {{ record.description }}</p>
               <p>{{ 'Amount' | localize }}: {{ record.amount | currency('RUB') }}</p>
               <p>{{ 'Category' | localize }}: {{ record.categoryName }}</p>
 
@@ -33,6 +33,11 @@
 import localizeFilter from '@/filters/localize.filter';
 
 export default {
+  metaInfo() {
+    return {
+      title: this.$title('Menu_Bill'),
+    };
+  },
   name: 'detail',
   data: () => ({
     record: null,
