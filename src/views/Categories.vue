@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Категории</h3>
+      <h3>{{ 'Categories' | localize }}</h3>
     </div>
     <section>
       <Loader v-if="loading" />
@@ -15,7 +15,7 @@
                 :key="categories.length + updateCount"
                 :categories="categories"
         />
-        <p v-else class="center">Категории пока не созданы</p>
+        <p v-else class="center">{{ 'Not found categories' | localize }}</p>
       </div>
     </section>
   </div>
@@ -49,6 +49,6 @@ export default {
       this.categories[idx].limit = category.limit;
       this.updateCount++;
     },
-  }
-}
+  },
+};
 </script>
